@@ -1,0 +1,28 @@
+.calender {
+    text-align:center;
+    font-size:1.5rem;
+    border:solid 0.2rem black;
+    /* カレンダーを中央に配置。 */
+    margin:0.5rem auto 0;
+}
+.calender td{ 
+    padding:0.5rem;
+    border:solid 0.1rem black;
+}
+.calender td:nth-child(1) {
+    color:crimson;
+}
+.calender td:nth-child(7) {
+    color:royalblue;
+}
+.calender_head {
+    font-weight:bold;
+    border-bottom:double 0.2rem black;
+}
+.calender {
+    width:100%;
+}
+.calender td{ 
+    width:calc(100%/7);
+}
+

@@ -1,0 +1,98 @@
+{% load static %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>家計簿</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!--日本語化用JS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+
+
+    <link rel="stylesheet" href="{% static 'finance/css/style.css' %}">
+    <script src="{% static 'finance/js/script.js' %}"></script>
+
+</head>
+<body>
+
+
+    <p>カテゴリ追加フォーム</p>
+    
+    <form action="{% url 'finance:category' %}" method="POST">
+        {% csrf_token %}
+        <div><input type="text" name="name" placeholder="カテゴリ名"></div>
+        <div>収入フラグ<input type="checkbox" name="income"></div>
+        <input type="submit" value="送信">
+    </form>
+
+    <p>収支入力フォーム</p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <select name="category">
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="pay_dt" readonly>
+        <input type="number" name="value" value="0">
+    </form>
+
+    <table>
+        <tbody>
+            {% for balance in balances %}
+            <tr>
+                <td>{{ balance.dt }}</td>
+                <td>{{ balance.pay_dt }}</td>
+                <td>{{ balance.category.name }}</td>
+                <td>{{ balance.value|intcomma }}円</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <!--カレンダー-->
+    <table class="calender">
+        <thead>
+            <tr class="calender_head">
+                <td>日</td>
+                <td>月</td>
+                <td>火</td>
+                <td>水</td>
+                <td>木</td>
+                <td>金</td>
+                <td>土</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week_date in month_date %}
+            <tr>
+                {% for day in week_date %}
+                <td>{{ day }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+</body>
+</html>
+
